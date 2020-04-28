@@ -4,6 +4,7 @@ Un tutorial en markdown qui explique pas à pas la création d'un web scrappeur,
 ## 1. Nokogiri
 Aujourd’hui, pour faire notre premier scrappeur, THP nous demande d’installer Nokogiri. Nokogiri c’est quoi au juste ? C’est une gem (comme twitter !) dont on peut retrouver toute la doc [ici](https://github.com/sparklemotion/nokogiri).
 En fait, ça permet d’effectuer des recherches dans des pages webs grâce à des “sélecteurs XPath et CSS3”.
+Pour la petite histoire, le mot "nokogiri" est un mot japonais qui signifie une scie : en fait, en utilisant la gem Nokogiri, on "scie" notre page web en petits bouts. 
 
 ### 1.1. Installation de Nokogiri
 Avant toute chose, il faut installer Nokogiri.
