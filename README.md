@@ -97,7 +97,7 @@ Pour plus d'infos, on peut aller jeter un oeil au [tutorial W3School sur le Xpat
 
 ## 3. CSS
 
-Nokogiri ne travaille seulement avec les Xpaths. 
+Nokogiri ne travaille pas seulement avec les Xpaths. 
 Elle peut travailler aussi avec le CSS de notre HTML.
 Voilà comment.
 
