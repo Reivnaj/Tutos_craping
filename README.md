@@ -5,7 +5,7 @@ Un tutorial en markdown qui explique pas à pas la création d'un web scrappeur,
 Aujourd’hui, pour faire notre premier scrappeur, THP nous demande d’installer Nokogiri. Nokogiri c’est quoi au juste ? C’est une gem (comme twitter !) dont on peut retrouver toute la doc [ici](https://github.com/sparklemotion/nokogiri).
 En fait, ça permet d’effectuer des recherches dans des pages webs grâce à des “sélecteurs XPath et CSS3”.
 
-(Le language Ruby a été développé par Yukihiro Matsumoto, et en japonais nokogiri c'est à indiquer un type de scie, donc quelquechose qui scie un page web dans ses parties plus petites.)
+Le language Ruby a été développé par Yukihiro Matsumoto, et en japonais 'nokogiri' est un type de scie. La gem Nokogiri est donc quelquechose qui scie une page web en petits bouts :)
 
 
 ### 1.1. Installation de Nokogiri
@@ -97,18 +97,18 @@ Pour plus d'infos, on peut aller jeter un oeil au [tutorial W3School sur le Xpat
 
 ## 3. CSS
 
-Nokogiri ne travaille pas seulement avec les Xpaths. 
-Elle peut travailler aussi avec le CSS de notre HTML.
-Voilà comment.
+Nokogiri ne fonctionne pas seulement avec les Xpaths. 
+Elle peut aussi utiliser avec le CSS de notre HTML.
+Voilà comment :
 
 ```
 document.css('a_css_class')
 ```
 Tu peux aussi récuperer des info précises dans le html.
-Par. ex., si on est en train de extrahir un lien (<a></a>), peut etre on a besoin de le `href` qui se trouve dans le outer html du lien (<a href="my_url"></a>).
-Petit reminder, comment distinguer l'outer html du inner html? C'est qu'on trouve dedans la balise c'est inner, c'est qu'on trouve sur le deux cotés de la balise est outer.
+Par ex., si on est en train d'extraire un lien (<a></a>), peut être qu'on a besoin du `href` qui se trouve dans le 'outer' html du lien (<a href="my_url"></a>).
+Petit reminder, comment distinguer l'outer html du inner html? Ce qu'on trouve dans la balise est 'inner', ce qu'on trouve sur les deux cotés de la balise est 'outer'.
 Du coup `<tag OUTER HTML>INNER HTML</tag>`.
-Comment extrahir donc le href de notre lien?
+Donc, comment extraire le href de notre lien ?
 
 ```
 <div>
@@ -121,29 +121,29 @@ document.css('.my_link_class') --> retourne "LINK"
 # méthode2
 document.css('a.my_link_class') --> retourne "LINK"
 
-# méthode3 (enchainer plus méthode .css ensemble) 
+# méthode3 (extraire le div, puis méthode .css ensemble) 
 document.css('div').css('a') --> retourne "LINK"
 
 # méthode4 (plus compacte) 
 document.css('div 'a') --> retourne "LINK"
 
-# méthode5 (extrahir le href)
+# méthode5 (extraire le href)
 document.css('a.my_link_class').attribute('href).value --> retourne "my_url"
 
-# méthode6 (extrahir le href)
+# méthode6 (extraire le href)
 document.css('a.my_link_class')['href'] --> retourne "my_url"
 ```
 
 ## 4. The Bastards Book of Ruby
-Comme beaucoup de choses dans la vie et dans le codage, il n'y a pas _une_ seule façon de faire un web scrappeur.
+Comme beaucoup de choses dans la vie et dans le code, il n'y a pas _une_ seule façon de faire un web scrappeur.
 Le Bouqin des Salauds de Ruby (ou The Bastards Book of Ruby, pour les apolides) offre une petite introduction au web scrapping, avec d'autres Ruby gems.
-Ici tu peut trouver le [tutoriel complet](http://ruby.bastardsbook.com/chapters/web-scraping/), ci-dessous on va juste t'expliquer les points clé.
+Tu peux trouver le [tutoriel complet ici](http://ruby.bastardsbook.com/chapters/web-scraping/), ci-dessous on va juste t'expliquer les points clés.
 
 *gem Crack*
 
 Crack c'est une petite gem.
-ça ce n'est pas une euphemisme, c'est juste à dire que elle fait peu de chose et a pas beaucoup de funtions.
-Mais son point fort c'est qu'elle peut parser du JSON. Pas mal.
+Ce n'est pas un euphemisme, c'est juste pour dire qu'elle fait peu de chose et n'a pas beaucoup de funtions.
+Mais, son point fort c'est qu'elle peut parser du JSON. Pas mal, non ?
 
 Crack va ouvrir ta page web:
 
@@ -154,9 +154,9 @@ url='http://en.wikipedia.org'
 document = Crack::JSON.parse(open(url))
 ```
 
-Et après, elle va parser le contenu selon la tag (le nom de la balise) que tu choisis.
+Et après, elle va parser le contenu selon le tag (le nom de la balise) que tu choisis.
 Crack est capable de parser des contenus en XML et en JSON. 
-Comment puis-je savoit si mes données sont en XML ou en JSON?
+Comment puis-je savoir si mes données sont en XML ou en JSON?
 On regarde le type de balise. Una balise entre <> c'est du XML, entre "" c'est du JSON.
 
 ```
@@ -171,7 +171,7 @@ Consultez la [doc complète](https://rubydoc.info/gems/crack) pour une liste exh
 
 *gem Mechanize*
 
-Nokogiri c'est le parseur de default de la gem Mechanize.
+Nokogiri c'est le parseur par défaut de la gem Mechanize.
 Mechanize nous aide à interagir avec le browser.
 
 Un example pour mieux comprendre les fonctionalités de cette gem.
@@ -193,6 +193,6 @@ news = page.links.find { |link| link.text == 'News' }.click
 # news = page.link_with(:text => 'News', :href => '/something')
 ```
 
-On trouve beaucoup d'autres examples dans la [doc complète](http://docs.seattlerb.org/mechanize/GUIDE_rdoc.html)
+On trouve beaucoup d'autres exemples dans la [doc complète](http://docs.seattlerb.org/mechanize/GUIDE_rdoc.html)
 
-## 5. Examples concrets
+## 5. Exemples concrets
