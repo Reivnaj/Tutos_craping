@@ -105,7 +105,7 @@ Voilà comment :
 document.css('a_css_class')
 ```
 Tu peux aussi récuperer des info précises dans le html.
-Par ex., si on est en train d'extraire un lien (<a></a>), peut être qu'on a besoin du `href` qui se trouve dans le 'outer' html du lien (<a href="my_url"></a>).
+Par ex., si on est en train d'extraire un lien (`<a></a>`), peut être qu'on a besoin du `href` qui se trouve dans le 'outer' html du lien (`<a href="my_url"></a>`).
 Petit reminder, comment distinguer l'outer html du inner html? Ce qu'on trouve dans la balise est 'inner', ce qu'on trouve sur les deux cotés de la balise est 'outer'.
 Du coup `<tag OUTER HTML>INNER HTML</tag>`.
 Donc, comment extraire le href de notre lien ?
