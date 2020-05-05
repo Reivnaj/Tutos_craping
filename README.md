@@ -136,7 +136,7 @@ document.css('a.my_link_class')['href'] --> retourne "my_url"
 
 ## 4. The Bastards Book of Ruby
 Comme beaucoup de choses dans la vie et dans le code, il n'y a pas _une_ seule façon de faire un web scrappeur.
-Le Bouqin des Salauds de Ruby (ou The Bastards Book of Ruby, pour les apolides) offre une petite introduction au web scrapping, avec d'autres Ruby gems.
+Le Bouqin des Salauds de Ruby (ou The Bastards Book of Ruby, pour les anglophones) offre une petite introduction au web scrapping, avec d'autres Ruby gems.
 Tu peux trouver le [tutoriel complet ici](http://ruby.bastardsbook.com/chapters/web-scraping/), ci-dessous on va juste t'expliquer les points clés.
 
 *gem Crack*
