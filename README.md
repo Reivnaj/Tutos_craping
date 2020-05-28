@@ -42,7 +42,7 @@ page = Nokogiri::HTML(open("https://fr.wikipedia.org/wiki/Web_scraping"))
 ```
 Notre variable `page` contient la page web https://fr.wikipedia.org/wiki/Web_scraping.
 Si tu tentes un `puts page` tu verras apparaître sur ton terminal le code html de wikipedia !
-Maintenant qu'on sait récupérer une page web, on va apprendre à faire des récupérer des données sur cette page.
+Maintenant qu'on sait récupérer une page web, on va apprendre à récupérer des données sur cette page.
 C'est là qu'XPath entre en jeu
 
 ## 2. Xpath
@@ -97,7 +97,7 @@ Pour plus d'infos, on peut aller jeter un oeil au [tutorial W3School sur le Xpat
 
 ## 3. CSS
 
-Nokogiri ne fonctionne pas seulement avec les Xpaths. 
+Nokogiri ne fonctionne pas seulement avec les Xpaths.
 Elle peut aussi utiliser avec le CSS de notre HTML.
 Voilà comment :
 
@@ -121,10 +121,10 @@ document.css('.my_link_class') --> retourne "LINK"
 # méthode2
 document.css('a.my_link_class') --> retourne "LINK"
 
-# méthode3 (extraire le div, puis méthode .css ensemble) 
+# méthode3 (extraire le div, puis méthode .css ensemble)
 document.css('div').css('a') --> retourne "LINK"
 
-# méthode4 (plus compacte) 
+# méthode4 (plus compacte)
 document.css('div 'a') --> retourne "LINK"
 
 # méthode5 (extraire le href)
@@ -155,7 +155,7 @@ document = Crack::JSON.parse(open(url))
 ```
 
 Et après, elle va parser le contenu selon le tag (le nom de la balise) que tu choisis.
-Crack est capable de parser des contenus en XML et en JSON. 
+Crack est capable de parser des contenus en XML et en JSON.
 Comment puis-je savoir si mes données sont en XML ou en JSON?
 On regarde le type de balise. Una balise entre <> c'est du XML, entre "" c'est du JSON.
 
@@ -180,15 +180,15 @@ Un example pour mieux comprendre les fonctionalités de cette gem.
 require 'mechanize'
 
 agent = Mechanize.new
-page = agent.get('http://google.com/') 
+page = agent.get('http://google.com/')
 
 page.links.each do |link| # to check all the links in a page
   puts link.text
 end
 
 news = page.links.find { |link| link.text == 'News' }.click
-#!! This can be shorten in 
-# news = page.link_with(:text => 'News').click 
+#!! This can be shorten in
+# news = page.link_with(:text => 'News').click
 # or lengthen with
 # news = page.link_with(:text => 'News', :href => '/something')
 ```
@@ -196,3 +196,86 @@ news = page.links.find { |link| link.text == 'News' }.click
 On trouve beaucoup d'autres exemples dans la [doc complète](http://docs.seattlerb.org/mechanize/GUIDE_rdoc.html)
 
 ## 5. Exemples concrets
+"Bon ok c'est cool tout ça. Mais concrètement ça donne quoi le Web scraping ?" Tu ne fais pas si bien dire jeune hacker en herbe, on va scrapper du concret !
+Plus haut, on a vu de supperbes ingrédients pour notre recette de scrappeur aux petits oignons.
+
+
+Voici comment nous allons procéder :
+
+* Nous allons préparer notre environnement de travail.
+* Puis choisir soigneusement les informations que l'on va aller scapper.
+* Et pour finir on va coder le bébé.
+
+### 5.1 L'environnement
+Pour faire un bon scrappeur tu as besoin d'un dossier carré. Donc commence par créer un dossier `scrappeur` dans lequel tu vas créer un fichier `Gemfile` avec au minimum la `gem 'nokogiri'` et la `gem 'pry'` dedans. La première pour les raisons expliquées plus haut et la seconde pour éviter de relancer notre scrappeur toute les minutes. Ce qui nous donne ce Gemfile :
+```ruby
+source "https://rubygems.org"
+
+gem 'nokogiri'
+gem 'pry'
+```
+ Puis un dossier `lib` dans lequel tu vas créer un fichier `mon_scrappeur.rb`, c'est là où tu vas écrir le code de ton scrappeur.
+Le tout devrait ressembler à ça :
+```
+scrappeur
+        |
+        |-Gemfile
+        |
+        |-lib
+            |
+            |-mon_scrappeur.rb
+
+```
+Super ! On a plus qu'a faire un `bundle install` dans notre dossier `scrappeur`. Ensuite il ne nous reste plus qu'a trouver quoi scrapper et écrire le code. Easy !
+
+### 5.2 Qu'est-ce qu'on scrap ?
+Ok maintenant le but est que tu intègre qu'avec un peu de bouteille tu pourra aller chercher des masses d'informations sur des pages web et les trier comme tu veux en un rien de temps. Il existe des tonnes d'exemples qui vont du simple outil amateur pour faire mumuse à l'usage industriel du scraping.
+Ici on va juste voir ensemble les bases et après "sky is the limit". Donc, qu'est-ce qu'on scrap ?
+
+On va dire que tu es arrivé à la fin de THP. Tu as fait un super projet final qui a confirmé tes compétences et t'a donné de l'assurance. Maintenant tu te dis que c'est peut être le moment de voir ce que tu vaux sur le marché de l'emploi. Naturellement tu vas faire un tour sur [indeed](https://www.indeed.fr/emplois?q=D%C3%A9veloppeur%20Web%20ruby%20on%20rails&l=paris&vjk=3d896a7bb658f967) par ce que c'est le premier resultat qui tombe sur google.
+
+C'est bien ça, on va faire du scraping sur Indeed !
+
+### 5.3 En ruby ça donne quoi ?
+C'est parti on passe au code, tu vas voir c'est facile.
+Les premières lignes de code dans `mon_scrappeur.rb` doivent être :
+```ruby
+require 'nokogiri'
+require 'open-uri'
+require 'pry'
+```
+Avec nokogiri on va pouvoir récuperer le contenu html de notre page. Open-uri nous permet d'ouvrir l'url de notre page cible. Et pry va nous servir a tester notre code sans le relancer a chaque fois.
+
+#### 5.3.1 Extraction de la matière première
+On va faire une methode `scraper` dans laquelle on va passer l'url d'indeed à nokogiri pour qu'il nous la fasse parler :
+````ruby
+def scraper
+  # On met notre url dans une varialble
+  url = "https://www.indeed.fr/emplois?q=D%C3%A9veloppeur%20Web%20ruby%20on%20rails&l=paris&vjk=3d896a7bb658f967"
+
+  # On passe notre url à nokogiri et on met le tout dans une varialble 'page'
+  page = Nokogiri::HTML(open("url"))
+
+  # On utilise pry pour faire nos testes
+  binding.pry
+end
+
+# On appel notre methode
+scraper
+
+````
+Top ! Maintenant pour vérifier si cela fonctionne tu vas dans ton terminal, tu te mets à la racine de ton dossier `scrappeur` et tu lances le fichier `mon_scrappeur.rb` avec la command `$ ruby mon_scrappeur.rb`. Si tout va bien tu es maintenant dans l'IRB de pry. Pour tester ton code il te suffit de faire un petit `$ puts page`. Pas de panique tout est normale, ce qui s'affiche n'est que le code HTML de notre url, c'est ce qui va nous servir de matière première pour la suite !
+
+#### 5.3.2 Usinage
+Maintenant que nokogiri nous a bien maché le travail c'est au tour de Xpath de faire son boulot. Cependant Xpath a besoin d'un petit coup de main ! Tu vas chercher le bon path (chemin) qui te mène à l'information que tu veux.
+Il y a plusieur façon pour trouver le path que tu cherches et [celle là](https://www.youtube.com/watch?v=2rlMNJa_4Z0) est plutôt rapide et assez explicite. Mais l'idéal c'est de fouiller le code sources de la page ! Imaginons que tu cherches le nom des entreprises qui ont posté des annonces sur cette page. Commence par créer une variable `companies_names` dans ta methode `scraper` :
+````ruby
+companies_names = page.xpath('le_fameux_path')
+````
+Avec la methode `xpath()` tu vas parser le code HTML retourné par nokogiri dans la variable `page`. Pour le path, si tu ne l'as pas trouvé le voici `//span[@class="company"]` . Avec ça tu demandes à Xpath de te pointer les balises HTML `<span>` qui ont la `class='company'`.
+Maintenant relance `$ ruby mon_scrappeur.rb` et une fois dans pry vérifie la variable que tu viens de créer avec un `puts companies_names.text`. Magnifique non ? Tente un `puts companies_names.size` pour avoir le nombre d'entreprise parsées.
+Je te laisse faire la même chose avec les salaires proposé par exemple.
+
+#### 5.3.3 Produit finit
+Une fois les informations chinées et triées sur le volet elles sont desormais ta propriété et tu peux en faire ce que tu veux. Tu peux créer un bot qui les stocke dans un GoogleSheet et qui recommence tous les mois pour voir l'évolution par exemple. Tu peux aussi aller sraper les pages d'amazon pour faire de la veille sur les prix des produits qui t'intéressent... Il n'y a vraiment pas de limite !
+Maintenant à toi de jouer.
