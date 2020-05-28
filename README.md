@@ -277,5 +277,6 @@ Maintenant relance `$ ruby mon_scrappeur.rb` et une fois dans pry vérifie la va
 Je te laisse faire la même chose avec les salaires proposé par exemple.
 
 #### 5.3.3 Produit finit
-Une fois les informations chinées et triées sur le volet elles sont desormais ta propriété et tu peux en faire ce que tu veux. Tu peux créer un bot qui les stocke dans un GoogleSheet et qui recommence tous les mois pour voir l'évolution par exemple. Tu peux aussi aller sraper les pages d'amazon pour faire de la veille sur les prix des produits qui t'intéressent... Il n'y a vraiment pas de limite !
+Une fois les informations chinées et triées sur le volet elles sont desormais ta propriété et tu peux en faire ce que tu veux. Tu peux créer un bot qui les stocke dans un GoogleSheet et qui recommence tous les mois pour voir l'évolution par exemple. Tu peux aussi aller sraper les pages d'amazon pour faire de la veille sur les prix des produits qui t'intéressent... 
+Il n'y a vraiment pas de limite !
 Maintenant à toi de jouer.
