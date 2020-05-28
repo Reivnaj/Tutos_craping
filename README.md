@@ -264,7 +264,7 @@ end
 scraper
 
 ````
-Top ! Maintenant pour vérifier si cela fonctionne tu vas dans ton terminal, tu te mets à la racine de ton dossier `scrappeur` et tu lances le fichier `mon_scrappeur.rb` avec la command `$ ruby mon_scrappeur.rb`. Si tout va bien tu es maintenant dans l'IRB de pry. Pour tester ton code il te suffit de faire un petit `$ puts page`. Pas de panique tout est normale, ce qui s'affiche n'est que le code HTML de notre url, c'est ce qui va nous servir de matière première pour la suite !
+Top ! Maintenant pour vérifier si cela fonctionne tu vas dans ton terminal, tu te mets à la racine de ton dossier `scrappeur` et tu lances le fichier `mon_scrappeur.rb` avec la command `$ ruby lib/mon_scrappeur.rb`. Si tout va bien tu es maintenant dans l'IRB de pry. Pour tester ton code il te suffit de faire un petit `$ puts page`. Pas de panique tout est normale, ce qui s'affiche n'est que le code HTML de notre url, c'est ce qui va nous servir de matière première pour la suite !
 
 #### 5.3.2 Usinage
 Maintenant que nokogiri nous a bien maché le travail c'est au tour de Xpath de faire son boulot. Cependant Xpath a besoin d'un petit coup de main ! Tu vas chercher le bon path (chemin) qui te mène à l'information que tu veux.
@@ -273,10 +273,10 @@ Il y a plusieur façon pour trouver le path que tu cherches et [celle là](https
 companies_names = page.xpath('le_fameux_path')
 ````
 Avec la methode `xpath()` tu vas parser le code HTML retourné par nokogiri dans la variable `page`. Pour le path, si tu ne l'as pas trouvé le voici `//span[@class="company"]` . Avec ça tu demandes à Xpath de te pointer les balises HTML `<span>` qui ont la `class='company'`.
-Maintenant relance `$ ruby mon_scrappeur.rb` et une fois dans pry vérifie la variable que tu viens de créer avec un `puts companies_names.text`. Magnifique non ? Tente un `puts companies_names.size` pour avoir le nombre d'entreprise parsées.
-Je te laisse faire la même chose avec les salaires proposé par exemple.
+Maintenant relance `$ ruby lib/mon_scrappeur.rb` et une fois dans pry vérifie la variable que tu viens de créer avec un `puts companies_names.text`. Magnifique non ? Tente un `puts companies_names.size` pour avoir le nombre d'entreprise que tu as récupéré.
+Je te laisse faire la même chose avec les salaires proposé par les entreprises. Tu peux les ranger du plus gros au plus petit par exemple.
 
 #### 5.3.3 Produit finit
-Une fois les informations chinées et triées sur le volet elles sont desormais ta propriété et tu peux en faire ce que tu veux. Tu peux créer un bot qui les stocke dans un GoogleSheet et qui recommence tous les mois pour voir l'évolution par exemple. Tu peux aussi aller sraper les pages d'amazon pour faire de la veille sur les prix des produits qui t'intéressent... 
+Une fois les informations chinées et triées sur le volet elles sont desormais ta propriété et tu peux en faire ce que tu veux. Tu peux créer un bot qui les stocke dans un GoogleSheet et qui recommence tous les mois pour voir l'évolution par exemple. Tu peux aussi aller sraper les pages d'amazon pour faire de la veille sur les prix des produits qui t'intéressent...
 Il n'y a vraiment pas de limite !
 Maintenant à toi de jouer.
